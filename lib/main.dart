@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minimalshop/pages/intro_page.dart';
+import 'package:minimalshop/pages/shop_page.dart';
 import 'package:minimalshop/themes/light_mode.dart';
 
 void main() {
@@ -15,6 +16,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightMode,
       home: const IntroPage(),
+      routes: {
+        '/intro_page': (context) => const IntroPage(),
+        '/shop_page': (context) => const ShopPage(),
+      },
     );
   }
 }
