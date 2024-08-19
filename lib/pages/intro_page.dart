@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minimalshop/components/my_button.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
@@ -7,16 +8,43 @@ class IntroPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: const Column(
-        children: [
-          // logo
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // logo
+            Icon(
+              Icons.shopping_bag,
+              size: 72,
+              color: Theme.of(context).colorScheme.inversePrimary,
+            ),
 
-          // title
+            const SizedBox(height: 25),
 
-          // subtitle
+            // title
+            const Text(
+              'Minimal Shop',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
 
-          // button
-        ],
+            const SizedBox(height: 6),
+
+            // subtitle
+            Text(
+              'Premium Quality Products',
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary),
+            ),
+            const SizedBox(height: 25),
+
+            // button
+            MyButton(
+                onTap: () {},
+                child: const Icon(
+                  Icons.arrow_forward,
+                ))
+          ],
+        ),
       ),
     );
   }
