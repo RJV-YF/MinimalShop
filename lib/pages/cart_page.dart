@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minimalshop/components/my_button.dart';
 import 'package:minimalshop/models/product.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +38,18 @@ class MyCart extends StatelessWidget {
     );
   }
 
+  // payment method
+  void pay(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          content: Text('Payment is done 💲💲💲'),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<Shop>().cart;
@@ -53,28 +66,41 @@ class MyCart extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: cart.length,
-              itemBuilder: (context, index) {
-                // get each item from cart
-                final product = cart[index];
+            child: cart.isEmpty
+                ? SizedBox(
+                    child: Image.network(
+                        'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHZ4dndmNTM3ZnJkY2JhdTN6ems3NDVheHNnbnQzYW5tNDF4eXdyaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/giXLnhxp60zEEIkq8K/giphy-downsized-large.gif'),
+                  )
+                : ListView.builder(
+                    itemCount: cart.length,
+                    itemBuilder: (context, index) {
+                      // get each item from cart
+                      final product = cart[index];
 
-                // return cart tile
-                return ListTile(
-                  title: Text(
-                    product.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                      // return cart tile
+                      return ListTile(
+                        title: Text(
+                          product.name,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(product.price.toStringAsFixed(2)),
+                        trailing: IconButton(
+                            onPressed: () => removeFromCart(context, product),
+                            icon: const Icon(Icons.remove)),
+                      );
+                    },
                   ),
-                  subtitle: Text(product.price.toStringAsFixed(2)),
-                  trailing: IconButton(
-                      onPressed: () => removeFromCart(context, product),
-                      icon: const Icon(Icons.remove)),
-                );
-              },
-            ),
           ),
 
           // pay button
+          Padding(
+            padding: const EdgeInsets.all(50.0),
+            child: Center(
+                child: cart.isNotEmpty
+                    ? MyButton(
+                        onTap: () => pay(context), child: const Text('Pay Now'))
+                    : Container()),
+          )
         ],
       ),
     );
